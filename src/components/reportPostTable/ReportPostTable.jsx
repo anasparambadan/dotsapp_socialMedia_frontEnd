@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { getReportedPost, removePost } from '../../api/PostRequest'
+import { getReportedPost, removePost } from '../../api/postRequest'
 import './reportPostTable.css'
 
 
@@ -8,16 +8,12 @@ import './reportPostTable.css'
 const ReportPostTable = () => {
   const [show, setShow] = useState(false)
   const [posts, setPosts] = useState([])
-  const [getPost, setGetPost] = useState([])
-  console.log(posts, 'posts at reportposts.........')
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER
+
   const getPosts = async () => {
-    // const reposts = await getReportedPost()
-    await getReportedPost().then((response)=>{
-      console.log(response,'response')
-      setPosts(response.data)
-      setGetPost(response.data)
-    })
+    const reposts = await getReportedPost()
+    setPosts(reposts.data)
+    
   }
   const { user } = useSelector((state) => state.authReducer.authData)
   const userId = user._id
@@ -26,10 +22,11 @@ const ReportPostTable = () => {
     getPosts()
   }, [])
 
-  const handleRemove = (postId) => {
-    removePost(postId, userId)
+  const handleRemove = async(postId) => {
+    await removePost(postId, userId)
+    getPosts()
 
-    console.log(postId, userId, 'postid,userid at reportposttable.........')
+    
   }
 
   return (

@@ -23,10 +23,10 @@ const RightSide = () => {
       {/* <TrendCard /> */}
       <FollowersCard/>
 
-      <button className="button r-button" onClick={() => setModalOpened(true)}>
+      {/* <button className="button r-button" onClick={() => setModalOpened(true)}>
         Share
       </button>
-      <ShareModal modalOpened={modalOpened} setModalOpened={setModalOpened} />
+      <ShareModal modalOpened={modalOpened} setModalOpened={setModalOpened} /> */}
     </div>
   );
 };

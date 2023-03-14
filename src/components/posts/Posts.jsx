@@ -12,11 +12,6 @@ const Posts = ({userId}) => {
   
   const{user}=useSelector((state)=>state.authReducer.authData)
   const count = useSelector((state)=>state.postReducer.posts)
-  console.log(count,'......................l.................')
-
-
- 
-
   let {loading} = useSelector((state)=>state.postReducer)
   let [posts, setPosts] = useState([])
   const params = useParams()
@@ -46,6 +41,7 @@ const baseUrl = process.env.REACT_APP_BASE_URL
         {loading? "fetching posts..":
         posts.map((post, id)=>{
             return <Post data={post} key={id} />
+            
         })}
     </div>
   )

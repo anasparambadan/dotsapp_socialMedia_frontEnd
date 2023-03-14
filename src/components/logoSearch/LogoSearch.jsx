@@ -11,7 +11,10 @@ const LogoSearch = () => {
   const [nameSearch, setNameSearch] = useState("")
   const [showResult, setShowResult] = useState(false)
   const [result, setResult] = useState([])
-
+  
+const resetForm = ()=>{
+  setNameSearch("")
+}
   const handleChange = (e) => {
     setNameSearch(e.target.value)
   }
@@ -20,18 +23,20 @@ const LogoSearch = () => {
     e.preventDefault();
     if(nameSearch === ""){
       setShowResult(false)
+
     }
     else{
       const usersFound = await searchUsers(nameSearch)
-      console.log(usersFound.data, 'usersFound at logosearch....')
       setResult(usersFound.data)
       setShowResult(true)
+      resetForm()
     }
    
   }
   const goToProfile =(id)=>{
     console.log(id,'id of user..............')
   }
+  
 
   return (
     <div>
@@ -54,7 +59,7 @@ const LogoSearch = () => {
               value={nameSearch} />
 
 
-            <div className='s-icon'>
+            <div className='s-icon' type ="submit" onClick={handleSubmit}>
               <UilSearch />
             </div>
 
@@ -86,6 +91,7 @@ const LogoSearch = () => {
 
       })
       }
+      {result.length === 0 && <span style={{padding:"1rem 1rem", color:"rgb(200, 0, 0)"}}>No user found</span>}
       </div>}
     </div>
   )

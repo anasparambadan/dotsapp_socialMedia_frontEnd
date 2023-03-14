@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import './Post.css'
+import './post.css'
 import Comment from '../../img/comment.png'
 import Share from '../../img/share.png'
 import options from '../../img/3dots.png'
 import Heart from '../../img/redlike4.png'
 import NotLike from '../../img/notlike.png'
 import { useDispatch, useSelector } from 'react-redux'
-import { commentPost, likePost,reportPost } from '../../api/PostRequest'
+import { commentPost, likePost,reportPost } from '../../api/postRequest'
 import PostComments from '../postComments/PostComments'
 import { useEffect } from 'react'
 import Button from '@mui/material/Button';
@@ -21,8 +21,8 @@ import { removePost } from '../../actions/postAction'
 
 
 const Post = ({ data }) => {
-  console.log(data,'data................')
-
+  console.log(data,'data.............')
+  
   const { user } = useSelector((state) => state.authReducer.authData)
 
   const [liked, setLiked] = useState(data.likes.includes(user._id))
@@ -33,6 +33,7 @@ const Post = ({ data }) => {
   const [commentData, setCommentData] = useState({ userComment: "", userId: user._id })
   const [commentCount, setCommentCount] = useState('')
   const dispatch = useDispatch()
+  console.log(liked,'liked')
 
 
 
@@ -44,6 +45,7 @@ const Post = ({ data }) => {
   const handleChange = (e) => {
     setCommentData({ ...commentData, [e.target.name]: e.target.value })
   }
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -156,7 +158,7 @@ const Post = ({ data }) => {
         </div>
         <form action="" className='commentForm' onSubmit={handleSubmit}>
 
-          {comment &&
+          {/* {comment && */}
             <div className='commentUser'>
               <img className='commentProfilePicture' src={user.profilePicture ? process.env.REACT_APP_PUBLIC_FOLDER + user.profilePicture : process.env.REACT_APP_PUBLIC_FOLDER + "defaultProfile.png"} alt="" />
               <div className="buttonIn">
@@ -175,7 +177,7 @@ const Post = ({ data }) => {
               </div>
 
             </div>
-          }
+          {/* } */}
 
         </form>
 

@@ -19,8 +19,8 @@
   }
   
   .a-left > img {
-    width: 6rem;
-    height: 6rem;
+    width: 4rem !important;
+    height: 4rem !important;
   }
   .Webname > h1 {
     font-size: 3rem;
@@ -105,3 +105,26 @@
     color: red;
     font-size: 12px;
   }
+  .link{
+  
+    font-weight: bold;
+    color: #4A4EB7;
+  }
+  .link:hover{
+    color: rgb(0, 21, 40);
+  }
+
+  
+@media (max-width: 767px) {
+  .Auth {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .Webname>h6{
+    display: none !important;
+  }
+  .authForm{
+    max-width: 320px !important;
+  }
+
+}

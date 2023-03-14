@@ -6,6 +6,8 @@ import { signUpSchema } from "../../schemas";
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { signUp, otpVerification } from "../../actions/AuthAction";
+import { resendOtp } from '../../api/authRequest';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 const SignUp = () => {
@@ -14,10 +16,12 @@ const SignUp = () => {
     const loading = useSelector((state) => state.authReducer.loading)
     const userData = useSelector((state) => state.authReducer.authData)
     const userId = userData?.user._id
-    const [isSignUp, setIsSignUp] = useState(false)
+    const userEmail = userData?.user.userName
+    const [isSignUp, setIsSignUp] = useState(true)
     const [isOtp, setisOtp] = useState(false)
     const [show, setShow] = useState(false)
     const desc = useRef()
+    console.log(userId,userEmail,'userid and useremail at resesend otp signp.jsx11111111...............')
 
     const initialValues = {
         firstName: '',
@@ -30,9 +34,8 @@ const SignUp = () => {
         initialValues: initialValues,
         validationSchema: signUpSchema,
         onSubmit: (values, action) => {
-            console.log(values, '---------values')
+
             const user = values.userName
-            console.log(user, '-----------user')
             dispatch(signUp(values))
 
             setShow(true)
@@ -42,13 +45,10 @@ const SignUp = () => {
             action.resetForm()
         }
     })
-    // console.log(errors)  
     const handleSubmit2 = async (e) => {
         e.preventDefault()
         if (desc.current.value) {
             const otp = desc.current.value
-            console.log(otp)
-            console.log(userId,otp,'user id and otp at signupu.jsx...............')
             dispatch(otpVerification(userId, otp))
 
         }
@@ -56,9 +56,16 @@ const SignUp = () => {
     const handleLogin = () => {
         navigate('/login')
     }
+    const resendotp = (userId,userEmail)=>{
+        resendOtp(userId,userEmail)
+        toast.success("OTP send, Please check your email");
+
+    }
     return (
+        
 
         <div className="Auth">
+            <Toaster/>
             {/* Left side */}
             <div className="a-left">
                 <img src={Logo} alt="" />
@@ -159,20 +166,21 @@ const SignUp = () => {
                             </div>
                         </div>
                         <div>
-                            <span style={{ fontSize: '12px', cursor: "pointer" }} onClick={handleLogin}>
-                                {isSignUp ? "Already Have Account Login here..!" : isOtp ? "Not Received OTP ? Resend here" : "Don't have an account Sign Up"}
+                            <span style={{ fontSize: '14px', cursor: "pointer" }} onClick={handleLogin}>
+                               "Already Have Account? <span className='link'>Login here..!"</span> 
                             </span>
                         </div>
                         <button className="button infoButton" type="submit" disabled={loading} >
-                            {loading ? "Loading..." : isSignUp ? 'Sign Up' : 'Sign in'}
+                            {loading ? "Loading..." : 'Sign Up'}
                         </button>
                     </form>
                     :
-                    <form onSubmit={handleSubmit2}>
+                    <form onSubmit={handleSubmit2} className="infoForm authForm">
+                         <h3>Enter OTP</h3>
                         <div className="inputfields">
                             <div className="inputname">
                                 <input
-                                    type="number"
+                                    type="password"
                                     className="infoInput"
                                     name="otp"
                                     placeholder="OTP"
@@ -181,6 +189,11 @@ const SignUp = () => {
                             </div>
                         </div>
                         <button className="button infoButton" type="submit" >Otp Verify</button>
+                        <div>
+                            <span style={{ fontSize: '14px', cursor: "pointer" }} onClick={()=>resendotp(userId,userEmail)}>
+                               "Not recieved OTP? <span className='link'>Resend."</span> 
+                            </span>
+                        </div>
                     </form>
                 }
             </div>

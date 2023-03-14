@@ -7,7 +7,6 @@ const Conversation = ({ data, currentUserId, online }) => {
     const [userData, setUserData] = useState(null)
     useEffect(() => {
         const userId = data.members.find((id) => id !== currentUserId)
-        console.log(userId, 'usrId at converstain.jsx')
         const getUserData = async () => {
 
             try {

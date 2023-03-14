@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { block, getAllUsers } from '../../api/userRequest'
-import './UserTable.css'
+import './userTable.css'
 
 
 const UserTable = () => {
@@ -14,19 +14,18 @@ const UserTable = () => {
 
   const handleBlock = async (id) => {
     const userBlocked = await block(id)
-    console.log(userBlocked, '-----------block response')
     getAll()
 
   }
 
   const getAll = async () => {
     const users = await getAllUsers()
-    console.log(users.data)
     setUser(users.data)
   }
   useEffect(() => {
     getAll()
   }, [])
+
   return (
     <div className="allLoginUsers">
       <div className='adminUsersList' >

@@ -25,7 +25,6 @@ const Chat = () => {
   const [recieveMessage, setRecieveMessage] = useState(null)
   const socket = useRef()
   const baseUrl = process.env.REACT_APP_BASE_URL
-  console.log(baseUrl,'socket url................')
 
   //send message to socket server
   useEffect(() => {
@@ -35,19 +34,6 @@ const Chat = () => {
     }
 
   }, [sendMessage])
-
-
-
-  // useEffect(() => {
-  //   console.log('soket useffect.....')
-  //   socket.current = io('http://localhost:8800')
-  //   socket.current.emit("new-user-add", user._id)
-  //   socket.current.on("get-users", (users) => {
-  //     setOnlineUsers(users);
-  //     console.log(onlineUsers,'onlineusers......')
-  //   });
-  // }, [user]);
-
 
   useEffect(() => {
     // socket.current = io("http://localhost:8800");

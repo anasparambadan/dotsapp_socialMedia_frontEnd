@@ -62,24 +62,29 @@ const Chatbox = ({ chat, currentUserId, setSendMessage, recieveMessage }) => {
 
     const handleSend = async (e) => {
         e.preventDefault();
-        const message = {
-            chatId: chat._id,
-            senderId: currentUserId,
-            text: newMessage,
-        }
+        if(newMessage!==""){
+            const message = {
+                chatId: chat._id,
+                senderId: currentUserId,
+                text: newMessage,
+            }
+    
+            //send messgae to database
+    
+            try {
+                const { data } = await addMessage(message);
+                setMessages([...messages, data])
+                setNewMessage("")
+            } catch (error) {
+                console.log(error)
+            }
+            //send message to socket server
+            const receiverId = chat.members.find((id) => id !== currentUserId)
+            setSendMessage({ ...message, receiverId })
 
-        //send messgae to database
-
-        try {
-            const { data } = await addMessage(message);
-            setMessages([...messages, data])
-            setNewMessage("")
-        } catch (error) {
-            console.log(error)
         }
-        //send message to socket server
-        const receiverId = chat.members.find((id) => id !== currentUserId)
-        setSendMessage({ ...message, receiverId })
+      
+    
     }
 
     // allways scroll to last messge

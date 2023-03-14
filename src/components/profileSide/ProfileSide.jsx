@@ -3,7 +3,7 @@ import React from 'react'
 import LogoSearch from '../logoSearch/LogoSearch'
 import  ProfileCard  from '../profileCard/ProfileCard'
 
-import './ProfileSide.css'
+import './profileSide.css'
 
 function ProfileSide() {
   return (

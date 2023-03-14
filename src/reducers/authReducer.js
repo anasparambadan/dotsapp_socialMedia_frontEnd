@@ -50,6 +50,8 @@ const authReducer = (state = { authData: null, loading: false, error: false, upd
     switch (action.type) {
         case "AUTH_START":
             return { ...state, loading: true, error: false };
+        case "LOADING_FALSE":
+            return { ...state, loading: false, error: false };
         case "AUTH_SUCCESS":
             localStorage.setItem("profile", JSON.stringify({ ...action?.data }))
             return { ...state, authData: action.data, loading: false, error: false };

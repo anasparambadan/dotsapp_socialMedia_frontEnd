@@ -1,7 +1,6 @@
 const postReducer = (
     state = {posts:[], loading:false, error:false, uploading:false},
     action)=>{
-        console.log(action,'actioin...........')
 
     switch(action.type){
         

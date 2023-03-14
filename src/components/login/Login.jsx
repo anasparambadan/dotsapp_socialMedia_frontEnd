@@ -6,6 +6,7 @@ import { loginSchema } from "../../schemas";
 import { useDispatch, useSelector } from 'react-redux'
 import {  useNavigate } from 'react-router-dom'
 import { logIn } from "../../actions/AuthAction";
+import toast, { Toaster } from 'react-hot-toast';
 
 
 const Login = () => {
@@ -23,8 +24,20 @@ const Login = () => {
     const { values, errors, touched, handleBlur, handleChange, handleSubmit, handleReset } = useFormik({
         initialValues: initialValues,
         validationSchema: loginSchema,
-        onSubmit: (values, action) => {
-            dispatch(logIn(values))
+        onSubmit: async(values, action) => {
+            
+         const response =  await dispatch(logIn(values))
+         
+           if (response.success) {
+            toast.success(response.message);
+          }
+          else {
+            toast.error(response.message);
+    
+          }
+
+          
+            
             action.resetForm()
         },
         onClick: (values, action) => {
@@ -37,6 +50,7 @@ const Login = () => {
     return (
 
         <div className="Auth">
+            <Toaster/>
             {/* Left side */}
             <div className="a-left">
                 <img src={Logo} alt="" />
@@ -85,12 +99,12 @@ const Login = () => {
 
 
                     <div>
-                        <span style={{ fontSize: '12px', cursor: "pointer" }} onClick={handleLogin}>
-                            {isSignUp ? "Already Have Account Login here..!" : isOtp ? "Not Received OTP ? Resend here" : "Don't have an account Sign Up"}
+                        <span style={{ fontSize: '14px', cursor: "pointer" }} onClick={handleLogin}>
+                           Don't have an account? <span className='link'>Sign Up here..!"</span> 
                         </span>
                     </div>
                     <button className="button infoButton" type="submit" disabled={loading} >
-                        {loading ? "Loading..." : isSignUp ? 'Sign Up' : 'Sign in'}
+                        {loading ? "Loading..." : 'Sign in'}
                     </button>
                     {/* <button className="button infoButton" type="submit">Sign in</button> */}
                 </form>

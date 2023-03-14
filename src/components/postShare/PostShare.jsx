@@ -9,71 +9,76 @@ import { useRef } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { uploadImage, uploadPost } from '../../actions/uploadAction';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 
 function PostShare() {
-    const loading = useSelector((state)=>state.postReducer.uploading)
+    const loading = useSelector((state) => state.postReducer.uploading)
     const [image, setImage] = useState(null)
     const imageRef = useRef()
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.authReducer.authData)
     const desc = useRef()
     const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER
-    
 
-    
+
+
+
 
     const onImageChange = (event) => {
         if (event.target.files && event.target.files[0]) {
             let img = event.target.files[0];
             setImage(img)
-            // console.log(image,'inamge set image')
         }
 
     }
 
-    const reset = ()=>{
+    const reset = () => {
         setImage(null);
-        desc.current.value=""
+        desc.current.value = ""
     }
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(image, 'image,........')
+        console.log(desc.current.value, 'desc............')
 
-        const newPost = {
-            userId: user._id,
-            desc: desc.current.value
+        if (image === null && desc.current.value === "") {
+            toast.error("Add something to post");
+
         }
-        if (image) {
-            const data = new FormData();
-            const filename = Date.now() + image.name;
-            data.append("name", filename)
-            data.append("file", image)
-            newPost.image = filename
-           
-            // console.log(Date.now(),'datae now')
-            // console.log(image.name,'image now')
-            // console.log(filename,'fileName at postshare')
-            // console.log(image,"image a t post model")
-            // console.log(newPost,'new post at postshare')
-            // console.log(data,'data at post share...')
-            try {
-                
-                dispatch(uploadImage(data))
-            } catch (error) {
-                console.log(error)
+        else {
+            const newPost = {
+                userId: user._id,
+                desc: desc.current.value
             }
+            if (image) {
+                const data = new FormData();
+                const filename = Date.now() + image.name;
+                data.append("name", filename)
+                data.append("file", image)
+                newPost.image = filename
+                try {
+
+                    dispatch(uploadImage(data))
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+
+            dispatch(uploadPost(newPost))
+            reset()
         }
 
-        dispatch(uploadPost(newPost))
-        reset()
 
     }
 
     return (
+
         <div className='postShare'>
-            <img src={user.profilePicture? serverPublic + user.profilePicture : serverPublic + "defaultProfile.png"} alt="" />
-            <div>
+            <Toaster />
+            <img src={user.profilePicture ? serverPublic + user.profilePicture : serverPublic + "defaultProfile.png"} alt="" />
+            <div className='postShareOptions'>
                 <input
                     ref={desc}
                     required
@@ -87,14 +92,14 @@ function PostShare() {
                         <UilPlayCircle />
                         Video
                     </div>
-                    <div className="optons" style={{ color: "var(--location)" }}>
+                    {/* <div className="optons" style={{ color: "var(--location)" }}>
                         <UilLocationPoint />
                         Location
-                    </div>
-                   
-                    <button className='button ps-button' onClick={handleSubmit} disabled={loading}>{loading?"Uploading":"Share"}</button>
+                    </div> */}
+
+                    <button className='button ps-button' onClick={handleSubmit} disabled={loading}>{loading ? "Uploading" : "Share"}</button>
                     <div style={{ display: "none" }}>
-                        <input type="file" className='myImage' ref={imageRef} onChange={onImageChange} accept="image/x-png,image/gif,image/jpeg"/>
+                        <input type="file" className='myImage' ref={imageRef} onChange={onImageChange} accept="image/x-png,image/gif,image/jpeg" />
                     </div>
 
                 </div>

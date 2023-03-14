@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import './ProfileCard.css'
+import './profileCard.css'
 import { Link } from 'react-router-dom'
 import { getUser } from '../../api/userRequest'
 import { createChat } from '../../api/chatRequest'
@@ -17,18 +17,13 @@ function ProfileCard({ location, userId }) {
 
   const getCount = async () => {
     const data = await axios.get(`${baseUrl}/post/${userId}/timeline`)
-    console.log(data,'data at profilecard............')
-
     const count = data.data.filter((post) => {
       return post.userId === userId
     })
-    console.log(count,'count................')
+
     setPostCount(count.length)
-
-
-
   }
-  console.log(postCount,'postcount..............')
+
 
 
 

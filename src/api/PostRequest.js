@@ -8,6 +8,6 @@ export const commentPost = (id,commentData) => API.put(`post/${id}/comment`,{com
 export const postComments = (postId)=> API.get(`/post/${postId}/postComments`)
 export const deletePost = (postId,userId)=> API.post(`/post/${postId}`,{userId:userId})
 export const reportPost = (postId,userId)=> API.post(`/post/${postId}/report`,{userId:userId})
-export const getReportedPost = ()=> API.get('/post/get/reported').then((response) => {return response})
+export const getReportedPost = ()=> API.get('/post/get/reported')
 export const removePost = (postId,userId)=> API.post(`/post/${postId}/remove`,{userId:userId})
 

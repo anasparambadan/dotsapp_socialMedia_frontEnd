@@ -4,8 +4,6 @@ import React, { useEffect, useState } from 'react'
 import './postComments.css'
 const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER
 const baseUrl = process.env.REACT_APP_BASE_URL 
-console.log(baseUrl,'.........baseurl at postcomments........')
-console.log(serverPublic,'server public at postcommetnt.jsx...........')
 
 function PostComments({ postId ,commentState}) {
  
