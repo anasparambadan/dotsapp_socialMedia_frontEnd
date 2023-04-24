@@ -12,7 +12,9 @@ function Home() {
       <ProfileSide/>
      < PostSide/>
      
-      <div className='rightSide'><RightSide/></div>
+      <div className='rightSide'>
+        <RightSide/>
+        </div>
     </div>
   )
 }
